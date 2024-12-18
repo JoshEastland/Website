@@ -1,0 +1,76 @@
+body{
+    background-color:honeydew;
+    color:black;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color:blue;
+    font-style:unset;
+    text-decoration: wavy;
+    font-weight:bolder;
+    
+}
+
+
+.navbar{
+    background-color: gray;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: static;
+    width: 100%;
+}
+
+.navbar a{
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    font-size: medium;
+}
+
+.navbar a:hover{
+    background-color: aqua;
+    border-radius: 5px;
+}
+
+.box-model{
+    padding: 15px;
+    background-color: lightblue;
+    border: 5px solid yellow;
+    margin: 20px;
+}
+
+.sidebar{
+    background-color: gray;
+    width: 200px;
+    height: 100%;
+    position:sticky;
+    top: 60px;
+    left: 0;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.sidebar ul{
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li{
+    margin: 15px 0;
+}
+
+.sidebar ul li a{
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover{
+    text-decoration: underline;
+}
+
+.maincontent{
+    margin-left: 220px;
+    padding: 20px;
+}

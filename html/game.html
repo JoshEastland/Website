@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NFL Player Guessing Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    .input-box {
+      margin: 10px auto;
+      display: flex;
+      justify-content: center;
+    }
+    input {
+      padding: 10px;
+      font-size: 1rem;
+      width: 250px;
+      margin-right: 10px;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 1rem;
+      cursor: pointer;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .btn-restart {
+      background-color: #007bff;
+    }
+    .btn-restart:hover {
+      background-color: #0056b3;
+    }
+    #hint {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      color: #333;
+    }
+    .player-box {
+      margin-top: 20px;
+      text-align: left;
+      display: inline-block;
+      width: 350px;
+    }
+    .correct {
+      color: #28a745;
+      font-weight: bold;
+    }
+    .wrong {
+      color: #dc3545;
+    }
+    .home-link {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 15px;
+      background-color: #ffc107;
+      color: black;
+      text-decoration: none;
+      font-size: 1rem;
+      border-radius: 5px;
+    }
+    .home-link:hover {
+      background-color: #e0a800;
+    }
+  </style>
+</head>
+<body>
+  <h1>NFL Player Guessing Game</h1>
+  <p>Try to guess the mystery NFL player! Use the hints after each guess.</p>
+  
+  <!-- Input Section -->
+  <div class="input-box">
+    <input type="text" id="guessInput" placeholder="Enter NFL player name" />
+    <button onclick="checkGuess()">Submit</button>
+    <button class="btn-restart" onclick="restartGame()">Restart</button>
+  </div>
+
+  <!-- Navigation Back to Home -->
+  <a href="../Index.html" class="home-link">Back to home</a>
+
+  <!-- Game Hints -->
+  <div id="hint"></div>
+  <div class="player-box" id="playerBox"></div>
+
+  <script>
+    // Expanded NFL Player List
+    const nflPlayers = [
+      { name: "Patrick Mahomes", team: "Chiefs", position: "QB", number: 15 },
+      { name: "Josh Allen", team: "Bills", position: "QB", number: 17 },
+      { name: "Davante Adams", team: "Raiders", position: "WR", number: 17 },
+      { name: "Cooper Kupp", team: "Rams", position: "WR", number: 10 },
+      { name: "Justin Jefferson", team: "Vikings", position: "WR", number: 18 },
+      { name: "Derrick Henry", team: "Titans", position: "RB", number: 22 },
+      { name: "Nick Bosa", team: "49ers", position: "DE", number: 97 },
+      { name: "Aaron Donald", team: "Rams", position: "DT", number: 99 },
+      { name: "Lamar Jackson", team: "Ravens", position: "QB", number: 8 },
+      { name: "Tom Brady", team: "Buccaneers", position: "QB", number: 12 },
+      { name: "Tyreek Hill", team: "Dolphins", position: "WR", number: 10 },
+      { name: "Joe Burrow", team: "Bengals", position: "QB", number: 9 },
+      { name: "Stefon Diggs", team: "Bills", position: "WR", number: 14 },
+      { name: "Christian McCaffrey", team: "49ers", position: "RB", number: 23 },
+      { name: "T.J. Watt", team: "Steelers", position: "LB", number: 90 },
+      { name: "Micah Parsons", team: "Cowboys", position: "LB", number: 11 },
+      { name: "Ja'Marr Chase", team: "Bengals", position: "WR", number: 1 },
+      { name: "Justin Herbert", team: "Chargers", position: "QB", number: 10 },
+      { name: "A.J. Brown", team: "Eagles", position: "WR", number: 11 },
+      { name: "Jalen Hurts", team: "Eagles", position: "QB", number: 1 },
+      { name: "Mark Andrews", team: "Ravens", position: "TE", number: 89 }
+    ];
+
+    let correctPlayer = nflPlayers[Math.floor(Math.random() * nflPlayers.length)];
+    let attempts = 0;
+
+    function checkGuess() {
+      const guessInput = document.getElementById("guessInput").value.trim();
+      const hintBox = document.getElementById("hint");
+      const playerBox = document.getElementById("playerBox");
+
+      if (!guessInput) {
+        alert("Please enter a player name.");
+        return;
+      }
+
+      const guessedPlayer = nflPlayers.find(player => player.name.toLowerCase() === guessInput.toLowerCase());
+
+      if (!guessedPlayer) {
+        alert("Player not found. Check your spelling and try again.");
+        return;
+      }
+
+      attempts++;
+      let feedback = `<p>Attempt ${attempts}: <strong>${guessedPlayer.name}</strong>`;
+
+      if (guessedPlayer.name === correctPlayer.name) {
+        feedback += ` <span class="correct">🎉 Correct! You guessed the mystery player in ${attempts} attempts!</span></p>`;
+        hintBox.innerHTML = feedback;
+        return;
+      }
+
+      feedback += '<br>';
+      feedback += guessedPlayer.team === correctPlayer.team 
+        ? `<span class="correct">✅ Team: ${guessedPlayer.team}</span><br>`
+        : `<span class="wrong">❌ Team: ${guessedPlayer.team}</span><br>`;
+
+      feedback += guessedPlayer.position === correctPlayer.position
+        ? `<span class="correct">✅ Position: ${guessedPlayer.position}</span><br>`
+        : `<span class="wrong">❌ Position: ${guessedPlayer.position}</span><br>`;
+
+      feedback += guessedPlayer.number === correctPlayer.number
+        ? `<span class="correct">✅ Number: #${guessedPlayer.number}</span>`
+        : `<span class="wrong">❌ Number: #${guessedPlayer.number}</span>`;
+
+      playerBox.innerHTML += feedback;
+      hintBox.innerHTML = `<p>Keep guessing! Use the hints to narrow it down.</p>`;
+      document.getElementById("guessInput").value = "";
+    }
+
+    function restartGame() {
+      correctPlayer = nflPlayers[Math.floor(Math.random() * nflPlayers.length)];
+      attempts = 0;
+      document.getElementById("hint").innerHTML = "";
+      document.getElementById("playerBox").innerHTML = "";
+      alert("Game restarted! Start guessing the new player.");
+    }
+  </script>
+</body>
+</html>
